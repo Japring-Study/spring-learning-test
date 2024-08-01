@@ -2,9 +2,7 @@ package cholog;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MemberController {
@@ -15,8 +13,9 @@ public class MemberController {
         return null;
     }
 
+    @RequestMapping("/json")
+    @ResponseBody
     public Person json() {
-        // TODO: /json 요청 시 {"name": "brown", "age": 20} 데이터를 응답할 수 있도록 설정하세요.
-        return null;
+        return new Person("brown", 20);
     }
 }
