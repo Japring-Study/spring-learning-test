@@ -28,15 +28,14 @@ public class MemberController {
     }
 
     @PutMapping("/members/{id}")
-    public ResponseEntity<Void> update() {
-        // TODO: member의 수정 정보와 url 상의 id 정보를 받아 member 정보를 수정한다.
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Member info) {
         Member member = members.stream()
-            .filter(it -> Objects.equals(it.getId(), null))
-            .findFirst()
-            .orElseThrow(RuntimeException::new);
+                .filter(it -> Objects.equals(it.getId(), id))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
 
-        member.update(null);
-        return null;
+        member.update(info);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/members/{id}")
