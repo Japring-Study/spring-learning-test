@@ -42,7 +42,6 @@ public class MemberController {
 
     @DeleteMapping("/members/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        // TODO: url 상의 id 정보를 받아 member를 삭제한다.
         Member member = members.stream()
             .filter(it -> Objects.equals(it.getId(), id))
             .findFirst()
