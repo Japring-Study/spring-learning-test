@@ -9,7 +9,8 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<Void> searchProduct(@RequestParam String keyword) {
-        if (true) {
+
+        if (keyword.equals("apple")) {
             throw new IllegalArgumentException("Invalid keyword: " + keyword);
         }
 
@@ -23,5 +24,10 @@ public class ProductController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Void> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.badRequest().build();
     }
 }
