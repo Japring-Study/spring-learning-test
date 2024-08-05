@@ -16,7 +16,7 @@ public class MemberController {
             // 쿼리 파라미터가 없는 경우
             return "static";
         } else {
-            // 쿼리 파라미터가 있는 경우
+            // 쿼리 파라미터가 있는 경우.
             model.addAttribute("name", name);
             return "hello";
         }
