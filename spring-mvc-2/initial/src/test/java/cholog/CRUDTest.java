@@ -21,7 +21,7 @@ class CRUDTest {
                 .when().post("/members")
                 .then().log().all().extract();
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value()); // HttpStatus.CREATED == 201
     }
 
     @Test
@@ -34,7 +34,7 @@ class CRUDTest {
                 .when().get("/members")
                 .then().log().all().extract();
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()); // HttpStatus.OK == 200
         assertThat(response.jsonPath().getList("", Member.class)).hasSize(1);
     }
 
@@ -49,7 +49,7 @@ class CRUDTest {
                 .when().put("/members/1")
                 .then().log().all().extract();
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()); // HttpStatus.OK == 200
     }
 
     @Test
@@ -61,6 +61,6 @@ class CRUDTest {
                 .when().delete("/members/1")
                 .then().log().all().extract();
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value()); // HttpStatus.NO_CONTENT== 204
     }
 }
