@@ -7,11 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
-    @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<String> searchException(IllegalArgumentException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
     @GetMapping("/products")
     public ResponseEntity<Void> searchProduct(@RequestParam String keyword) {
         if (true) {
