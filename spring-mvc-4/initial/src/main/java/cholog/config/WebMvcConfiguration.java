@@ -1,5 +1,6 @@
 package cholog.config;
 
+import cholog.ui.AuthenticationPrincipalArgumentResolver;
 import cholog.ui.CheckLoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -26,5 +27,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     // TODO: AuthenticationPrincipalArgumentResolver 등록하기
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new AuthenticationPrincipalArgumentResolver());
     }
 }
