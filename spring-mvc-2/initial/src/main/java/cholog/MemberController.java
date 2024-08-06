@@ -8,46 +8,52 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class MemberController {
 
-    private final List<Member> members = new ArrayList<>();
-    private final AtomicLong index = new AtomicLong(1);
+	private final List<Member> members = new ArrayList<>();
+	private final AtomicLong index = new AtomicLong(1);
 
-    @PostMapping("/members")
-    public ResponseEntity<Void> create(@RequestBody Member member) {
-        Member newMember = Member.toEntity(member, index.getAndIncrement());
-        members.add(newMember);
-        return ResponseEntity.created(URI.create("/members/" + newMember.getId())).build();
-    }
+	@PostMapping("/members")
+	public ResponseEntity<Void> create(@RequestBody Member member) {
+		Member newMember = Member.toEntity(member, index.getAndIncrement());
+		members.add(newMember);
+		return ResponseEntity.created(URI.create("/members/" + newMember.getId())).build();
+	}
 
-    @GetMapping("/members")
-    public ResponseEntity<List<Member>> read() {
-        return ResponseEntity.ok(members);
-    }
+	@GetMapping("/members")
+	public ResponseEntity<List<Member>> read() {
+		return ResponseEntity.ok(members);
+	}
 
-    @PutMapping("/members/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Member newMember) {
-        Member member = members.stream()
-            .filter(it -> Objects.equals(it.getId(), id))
-            .findFirst()
-            .orElseThrow(RuntimeException::new);
+	@PutMapping("/members/{id}")
+	public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Member newMember) {
+		Member member = members.stream()
+			.filter(it -> Objects.equals(it.getId(), id))
+			.findFirst()
+			.orElseThrow(RuntimeException::new);
 
-        member.update(newMember);
-        return null;
-    }
+		member.update(newMember);
 
-    @DeleteMapping("/members/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        Member member = members.stream()
-            .filter(it -> Objects.equals(it.getId(), id))
-            .findFirst()
-            .orElseThrow(RuntimeException::new);
+		return ResponseEntity.ok().build();
+	}
 
-        members.remove(member);
+	@DeleteMapping("/members/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		Member member = members.stream()
+			.filter(it -> Objects.equals(it.getId(), id))
+			.findFirst()
+			.orElseThrow(RuntimeException::new);
 
-        return ResponseEntity.noContent().build();
-    }
+		members.remove(member);
+
+		return ResponseEntity.noContent().build();
+	}
 }
