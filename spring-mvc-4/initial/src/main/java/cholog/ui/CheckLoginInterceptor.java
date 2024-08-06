@@ -11,7 +11,6 @@ public class CheckLoginInterceptor implements HandlerInterceptor {
         if (accessToken == null) {
             throw new AuthorizationException();
         }
-
         return true;
     }
 }
