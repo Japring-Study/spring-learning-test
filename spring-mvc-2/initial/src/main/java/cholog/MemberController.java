@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-
+import org.springframework.web.bind.annotation.*;
+// check this file
 @Controller
 public class MemberController {
 
@@ -19,9 +18,9 @@ public class MemberController {
     private final AtomicLong index = new AtomicLong(1);
 
     @PostMapping("/members")
-    public ResponseEntity<Void> create() {
+    public ResponseEntity<Void> create(@RequestBody Member member) {
         // TODO: member 정보를 받아서 생성한다.
-        Member newMember = Member.toEntity(null, index.getAndIncrement());
+        Member newMember = Member.toEntity(member, index.getAndIncrement());
         members.add(newMember);
         return ResponseEntity.created(URI.create("/members/" + newMember.getId())).build();
     }
@@ -29,31 +28,32 @@ public class MemberController {
     @GetMapping("/members")
     public ResponseEntity<List<Member>> read() {
         // TODO: 저장된 모든 member 정보를 반환한다.
-        return null;
+        return new ResponseEntity<>(members, HttpStatus.OK);
     }
 
     @PutMapping("/members/{id}")
-    public ResponseEntity<Void> update() {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Member newMember) {
         // TODO: member의 수정 정보와 url 상의 id 정보를 받아 member 정보를 수정한다.
         Member member = members.stream()
-            .filter(it -> Objects.equals(it.getId(), null))
+            .filter(it -> Objects.equals(it.getId(), id))
             .findFirst()
             .orElseThrow(RuntimeException::new);
 
-        member.update(null);
+        member.update(newMember);
+        //return new ResponseEntity<>(null, HttpStatus.NO_CONTENT); 이건 왜 안되는지?
         return null;
     }
 
     @DeleteMapping("/members/{id}")
-    public ResponseEntity<Void> delete() {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         // TODO: url 상의 id 정보를 받아 member를 삭제한다.
         Member member = members.stream()
-            .filter(it -> Objects.equals(it.getId(), null))
+            .filter(it -> Objects.equals(it.getId(), id))
             .findFirst()
             .orElseThrow(RuntimeException::new);
 
         members.remove(member);
 
-        return null;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
