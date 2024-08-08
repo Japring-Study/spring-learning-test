@@ -1,10 +1,13 @@
 package cholog.config;
 
+import cholog.ui.CheckLoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
 
 import java.util.List;
 
@@ -19,8 +22,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     // TODO: "/admin/**" 요청 시 LoginInterceptor 동작하게 하기
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new CheckLoginInterceptor()).addPathPatterns("/admin/**");
     }
-
     // TODO: AuthenticationPrincipalArgumentResolver 등록하기
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
