@@ -13,6 +13,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     // TODO: "/" 요청 시 hello.html 페이지 응답하기
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("hello.html");
     }
 
     // TODO: "/admin/**" 요청 시 LoginInterceptor 동작하게 하기
