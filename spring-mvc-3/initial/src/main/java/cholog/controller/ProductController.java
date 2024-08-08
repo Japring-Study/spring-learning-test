@@ -1,6 +1,7 @@
 package cholog.controller;
 
 import cholog.exception.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,11 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping("/products/{id}")
     public ResponseEntity<Void> getProduct(@PathVariable Long id) {
         if (true) {
@@ -24,4 +30,5 @@ public class ProductController {
 
         return ResponseEntity.ok().build();
     }
+
 }
