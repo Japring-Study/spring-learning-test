@@ -14,7 +14,7 @@ class ResponseStaticTest {
     void responseIndexPage() {
         var response = RestAssured
             .given().log().all()
-            .when().get("/")
+            .when().get("/") // 또는 .when().get("/hi.html")
             .then().log().all().extract();
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
