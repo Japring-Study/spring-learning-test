@@ -59,6 +59,6 @@ public class UpdatingDAO {
 
         Long id = keyHolder.getKey().longValue();
 
-        return keyHolder.getKey().longValue();
+        return id;
     }
 }
