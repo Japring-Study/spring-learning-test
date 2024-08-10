@@ -70,4 +70,10 @@ public class QueryingDaoTest {
 
         assertThat(customers).hasSize(2);
     }
+
+    @Test
+    void findAllCustomersWithAllAttributes() {
+        // This will print all customers with all attributes to the console
+        queryingDAO.findAllCustomersWithAllAttributes();
+    }
 }
