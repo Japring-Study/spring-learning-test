@@ -48,7 +48,13 @@ public class QueryingDAO {
     public Customer findCustomerById(Long id) {
         String sql = "select id, first_name, last_name from customers where id = ?";
         //TODO : 주어진 Id에 해당하는 customer를 객체로 반환
-        return null;
+        return jdbcTemplate.queryForObject(sql,
+                (rs, rowNum) -> new Customer(
+                        rs.getLong("id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name")
+                )
+                , id);
     }
 
     /**
