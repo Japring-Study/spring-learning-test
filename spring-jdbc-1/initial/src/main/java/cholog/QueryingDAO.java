@@ -87,7 +87,16 @@ public class QueryingDAO {
      */
     public List<Customer> findCustomerByFirstName(String firstName) {
         String sql = "select id, first_name, last_name from customers where first_name = ?";
-        //TODO : firstName을 기준으로 customer를 list형태로 반환
-        return null;
+
+        final RowMapper<Customer> rowMapper = (resultSet, rowNum) -> {
+            Customer customer = new Customer(
+                    resultSet.getLong("id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"));
+            return customer;
+        };
+
+        List<Customer> customers = jdbcTemplate.query(sql,rowMapper, firstName);
+        return customers;
     }
 }
