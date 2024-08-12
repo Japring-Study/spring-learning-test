@@ -1,5 +1,7 @@
 package cholog;
 
+import java.sql.PreparedStatement;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -50,9 +52,13 @@ public class UpdatingDAO {
 		String sql = "insert into customers (first_name, last_name) values (?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
-		//todo : keyHolder에 대해 학습하고, Customer를 저장후 저장된 Customer의 id를 반환하기
+		jdbcTemplate.update(con -> {
+			PreparedStatement ps = con.prepareStatement(sql, new String[] {"id"});
+			ps.setString(1, customer.getFirstName());
+			ps.setString(2, customer.getLastName());
 
-		Long id = keyHolder.getKey().longValue();
+			return ps;
+		}, keyHolder);
 
 		return keyHolder.getKey().longValue();
 	}
