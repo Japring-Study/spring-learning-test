@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 
+import static java.lang.String.valueOf;
+
 @Repository
 public class UpdatingDAO {
     private JdbcTemplate jdbcTemplate;
@@ -39,8 +41,10 @@ public class UpdatingDAO {
      * public int update(String sql, @Nullable Object... args)
      */
     public int delete(Long id) {
-        //todo: id에 해당하는 customer를 지우고, 해당 쿼리에 영향받는 row 수반환하기
-        return 0;
+        String sql = "delete from customers where id = ?";
+        Integer affectedRow = jdbcTemplate.update(sql, Long.valueOf(id));
+
+        return affectedRow;
     }
 
     /**
