@@ -46,9 +46,17 @@ public class QueryingDAO {
      * public <T> T queryForObject(String sql, RowMapper<T> rowMapper, @Nullable Object... args)
      */
     public Customer findCustomerById(Long id) {
-        String sql = "select id, first_name, last_name from customers where id = ?";
         //TODO : 주어진 Id에 해당하는 customer를 객체로 반환
-        return null;
+        return jdbcTemplate.queryForObject(
+                "select id, first_name, last_name from customers where id = ?",
+                (resultSet, rowNum) -> {
+                    Customer customer = new Customer(
+                            resultSet.getLong("id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name")
+                    );
+                    return customer;
+                }, id);
     }
 
     /**
