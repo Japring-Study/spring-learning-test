@@ -2,7 +2,7 @@ package cholog.property.config;
 
 import cholog.property.GoogleDriveRestClient;
 import cholog.property.GoogleMapsRestClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -24,9 +24,11 @@ public class PropertySourceConfig {
         return new GoogleMapsRestClient(endpoint);
     }
 
-    // TODO: ext-api.properties의 google.api.endpoint 값을 어노테이션을 사용해서 가져오기
-    // TODO: 위 endpoint 값을 사용하여 GoogleMapsRestClient를 빈으로 등록하기
+    @Value("${google.api.endpoint}")
+    private String googleApiEndpoint;
+
+    @Bean
     public GoogleDriveRestClient googleDriveRestClient() {
-        return new GoogleDriveRestClient("");
+        return new GoogleDriveRestClient(googleApiEndpoint);
     }
 }
