@@ -12,8 +12,8 @@ public class AppConfig {
 
     @Bean
     public AuthService authService() {
-        // 실제 구현체가 없으면 빈이 등록되지 않는다.
         return new AuthService();
+        // 실제 구현체가 없으면 빈이 등록되지 않는다.
     }
 
     @Bean
