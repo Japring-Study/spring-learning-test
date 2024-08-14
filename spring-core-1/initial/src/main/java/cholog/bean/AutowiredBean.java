@@ -3,12 +3,19 @@ package cholog.bean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.swing.*;
+
 @Component
 public class AutowiredBean {
-    /*
-    어떤 방법으로 Component에 Bean을 주입하는지 학습하기
-     */
+
+    @Autowired
     private SpringBean springBean;
+//    private SpringBean springBean = new SpringBean();
+
+//    가장 추천
+//    public AutowiredBean(SpringBean springBean) {
+//        this.springBean = springBean;
+//    }
 
     public String sayHello() {
         return springBean.hello();
