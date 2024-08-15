@@ -17,6 +17,8 @@ public class EntityManagerTest {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     /**
      * 비영속 -> 영속
@@ -34,11 +36,11 @@ public class EntityManagerTest {
      */
     @Test
     void flush() {
-        String sqlForSelectCustomer = "select * from customer where id = 1";
-
         Customer customer = new Customer("Jack", "Bauer");
         entityManager.persist(customer);
         customer.updateFirstName("Danial");
+
+        String sqlForSelectCustomer = "select * from customer where id = " + customer.getId();
 
         Customer savedCustomer = jdbcTemplate.query(sqlForSelectCustomer, rs -> {
             rs.next();
