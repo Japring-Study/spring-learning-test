@@ -3,7 +3,7 @@ package cholog.configuration;
 public class AuthenticationPrincipalArgumentResolver {
     private AuthService authService;
 
-    public AuthenticationPrincipalArgumentResolver() {
+    public AuthenticationPrincipalArgumentResolver(AuthService authService) {
         this.authService = authService;
     }
 

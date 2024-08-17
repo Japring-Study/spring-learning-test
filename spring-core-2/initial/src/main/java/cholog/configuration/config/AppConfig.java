@@ -16,7 +16,7 @@ public class AppConfig {
     @Bean
     // TODO: AuthenticationPrincipalArgumentResolver를 빈 등록하고 authService에 대한 의존성을 주입하기
     public AuthenticationPrincipalArgumentResolver authenticationPrincipalArgumentResolver() {
-        return new AuthenticationPrincipalArgumentResolver();
+        return new AuthenticationPrincipalArgumentResolver(authService());
     }
 
 }
