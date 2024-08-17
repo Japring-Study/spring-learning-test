@@ -31,6 +31,6 @@ public class PropertySourceConfig {
     // TODO: 위 endpoint 값을 사용하여 GoogleMapsRestClient를 빈으로 등록하기
     @Bean
     public GoogleDriveRestClient googleDriveRestClient() {
-        return new GoogleDriveRestClient("google.api.endpoint");
+        return new GoogleDriveRestClient(env.getProperty("google.api.endpoint"));
     }
 }
