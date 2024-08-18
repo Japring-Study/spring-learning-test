@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
-// TODO: Java-based Configuration을 하기 위한 클래스로 지정하기 => Configuration
-// TODO: ext-api.properties 파일을 활용하기 위한 설정 추가하기 =>
 @Configuration
 @PropertySource("classpath:ext-api.properties")
 public class PropertySourceConfig {
