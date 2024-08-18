@@ -3,6 +3,7 @@ package cholog;
 import jakarta.persistence.*;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Book {
@@ -13,6 +14,9 @@ public class Book {
 
     @ManyToOne
     private Publisher publisher;
+
+    @OneToMany(mappedBy = "book")
+    private Set<BookAuthor> authors;
 
     public Book() {
 
@@ -36,6 +40,8 @@ public class Book {
     }
 
     public Set<Author> getAuthors() {
-        return null;
+        return authors.stream()
+                .map(BookAuthor::getAuthor)
+                .collect(Collectors.toSet());
     }
 }
