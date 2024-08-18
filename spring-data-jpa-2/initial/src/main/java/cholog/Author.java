@@ -1,9 +1,8 @@
 package cholog;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Author {
@@ -11,7 +10,14 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
+    private Person person;
+
+    @OneToMany(mappedBy = "author")
+    private Set<BookAuthor> books;
+
     public Author(Person person) {
+        this.person = person;
     }
 
     public Author() {
@@ -22,6 +28,6 @@ public class Author {
     }
 
     public Person getPerson() {
-        return null;
+        return person;
     }
 }
