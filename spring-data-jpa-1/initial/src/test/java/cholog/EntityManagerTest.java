@@ -24,7 +24,7 @@ public class EntityManagerTest {
     @Test
     void persist() {
         Customer customer = new Customer("Jack", "Bauer");
-        entityManager.persist(customer);
+        entityManager.persist(customer); // JPA에서 데이터를 데이터베이스에 영구적으로 저장
 
         assertThat(entityManager.find(Customer.class, 1L)).isNotNull();
     }
