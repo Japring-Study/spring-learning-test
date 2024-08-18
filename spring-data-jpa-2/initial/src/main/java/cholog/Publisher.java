@@ -1,10 +1,9 @@
 package cholog;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,8 +13,12 @@ public class Publisher {
     private Long id;
     private String name;
 
+    @OneToMany(mappedBy = "publisher")
+    private Set<Book> books;
+
     public Publisher(String name) {
         this.name = name;
+        this.books = new HashSet<>();
     }
 
     public Publisher() {
@@ -30,10 +33,10 @@ public class Publisher {
     }
 
     public void addBook(Book book) {
-
+        books.add(book);
     }
 
     public Set<Book> getBooks() {
-        return null;
+        return books;
     }
 }
