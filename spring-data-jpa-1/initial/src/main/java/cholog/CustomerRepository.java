@@ -6,5 +6,8 @@ import java.util.List;
 
 
 public interface CustomerRepository extends CrudRepository<Customer,Long> {
-    List<Customer> findByLastName(String lastName); //다음 부분이 이해가 잘 되지 않습니다..ㅠ
+    List<Customer> findByLastName(String lastName); //다음 부분이 이해가 잘 되지 않습니다..ㅠ -> 이해 완료
+    List<Customer> findByLastNameIgnoreCase(String lastName);
+    List<Customer> findByLastNameOrderByFirstNameDesc(String lastName);
+
 }

@@ -1,4 +1,4 @@
-/*
+
 package cholog;
 
 import jakarta.persistence.EntityManager;
@@ -54,4 +54,3 @@ public class QueryCreationTest {
 
     }
 }
-*/
