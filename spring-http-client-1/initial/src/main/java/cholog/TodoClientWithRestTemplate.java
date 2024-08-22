@@ -1,6 +1,10 @@
 package cholog;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 public class TodoClientWithRestTemplate {
     private final RestTemplate restTemplate;
@@ -10,8 +14,14 @@ public class TodoClientWithRestTemplate {
     }
 
     public Todo getTodoById(Long id) {
-        // TODO: restTemplate을 사용하여 요청을 보내고 결과를 Todo로 변환하여 반환
-        // TODO: 존재하지 않는 id로 요청을 보낼 경우 TodoException.NotFound 예외를 던짐
-        return new Todo();
+
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl("http://jsonplaceholder.typicode.com")
+                .path("/todos/{todoId}")
+                .build(id);
+
+        ResponseEntity<Todo> result = restTemplate.getForEntity(uri, Todo.class);
+
+        return result.getBody();
     }
 }
