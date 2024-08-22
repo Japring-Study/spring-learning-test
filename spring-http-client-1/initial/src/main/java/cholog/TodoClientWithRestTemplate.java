@@ -1,6 +1,8 @@
 package cholog;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,8 +22,10 @@ public class TodoClientWithRestTemplate {
                 .path("/todos/{todoId}")
                 .build(id);
 
-        ResponseEntity<Todo> result = restTemplate.getForEntity(uri, Todo.class);
-
-        return result.getBody();
+        try {
+            return restTemplate.getForEntity(uri, Todo.class).getBody();
+        } catch (HttpClientErrorException e) {
+            throw new TodoException.NotFound(id);
+        }
     }
 }
