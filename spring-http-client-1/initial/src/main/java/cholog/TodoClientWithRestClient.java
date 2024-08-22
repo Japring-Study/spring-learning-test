@@ -1,5 +1,7 @@
 package cholog;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.RestClient;
 
 import java.util.Collections;
@@ -14,7 +16,11 @@ public class TodoClientWithRestClient {
 
     public List<Todo> getTodos() {
         // TODO: restClient의 get 메서드를 사용하여 요청을 보내고 결과를 Todo 리스트로 변환하여 반환
-        return Collections.emptyList();
+
+        return restClient.get()
+                .uri("/todos")
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<Todo>>(){});
     }
 
     public Todo getTodoById(Long id) {
