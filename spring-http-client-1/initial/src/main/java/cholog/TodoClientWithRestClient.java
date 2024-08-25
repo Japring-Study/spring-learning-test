@@ -3,6 +3,7 @@ package cholog;
 import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.client.RestClient;
 
 public class TodoClientWithRestClient {
@@ -24,8 +25,9 @@ public class TodoClientWithRestClient {
 		return restClient.get()
 			.uri("/todos/{id}", id)
 			.retrieve()
+			.onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
+				throw new TodoException.NotFound(id);
+			})
 			.body(Todo.class);
-		// TODO: 존재하지 않는 id로 요청을 보낼 경우 TodoException.NotFound 예외를 던짐
-
 	}
 }
