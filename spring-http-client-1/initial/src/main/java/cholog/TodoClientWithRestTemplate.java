@@ -1,17 +1,25 @@
 package cholog;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class TodoClientWithRestTemplate {
-    private final RestTemplate restTemplate;
+	private static final String TODO_URL = "http://jsonplaceholder.typicode.com/todos";
 
-    public TodoClientWithRestTemplate(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+	private final RestTemplate restTemplate;
 
-    public Todo getTodoById(Long id) {
-        // TODO: restTemplate을 사용하여 요청을 보내고 결과를 Todo로 변환하여 반환
-        // TODO: 존재하지 않는 id로 요청을 보낼 경우 TodoException.NotFound 예외를 던짐
-        return new Todo();
-    }
+	public TodoClientWithRestTemplate(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
+
+	public Todo getTodoById(Long id) {
+		try {
+			ResponseEntity<Todo> todoResponseEntity = restTemplate.getForEntity(TODO_URL + "/" + id, Todo.class);
+
+			return todoResponseEntity.getBody();
+		} catch (RestClientException e) {
+			throw new TodoException.NotFound(id);
+		}
+	}
 }
