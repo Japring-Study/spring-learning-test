@@ -1,6 +1,7 @@
 package cholog;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class TodoClientWithRestTemplate {
@@ -13,9 +14,12 @@ public class TodoClientWithRestTemplate {
 	}
 
 	public Todo getTodoById(Long id) {
-		ResponseEntity<Todo> todoResponseEntity = restTemplate.getForEntity(TODO_URL + "/" + id, Todo.class);
+		try {
+			ResponseEntity<Todo> todoResponseEntity = restTemplate.getForEntity(TODO_URL + "/" + id, Todo.class);
 
-		return todoResponseEntity.getBody();
-		// TODO: 존재하지 않는 id로 요청을 보낼 경우 TodoException.NotFound 예외를 던짐
+			return todoResponseEntity.getBody();
+		} catch (RestClientException e) {
+			throw new TodoException.NotFound(id);
+		}
 	}
 }
