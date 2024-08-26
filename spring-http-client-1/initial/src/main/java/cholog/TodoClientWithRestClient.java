@@ -13,8 +13,13 @@ public class TodoClientWithRestClient {
     }
 
     public List<Todo> getTodos() {
-        // TODO: restClient의 get 메서드를 사용하여 요청을 보내고 결과를 Todo 리스트로 변환하여 반환
-        return Collections.emptyList();
+        //RestClient.builder().baseUrl("http://jsonplaceholder.typicode.com").build()
+//        String uri = "http://jsonplaceholder.typicode.com/todos";
+        List<Todo> todos = restClient.get()
+                            .uri("/todos")
+                            .retrieve()
+                            .body(List.class);
+        return todos;
     }
 
     public Todo getTodoById(Long id) {
