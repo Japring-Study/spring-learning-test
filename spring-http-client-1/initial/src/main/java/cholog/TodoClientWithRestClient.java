@@ -25,18 +25,13 @@ public class TodoClientWithRestClient {
     }
 
     public Todo getTodoById(Long id) {
-        try {
-            Todo todo = restClient.get()
-                    .uri("/todos/{id}", id)
-                    .retrieve()
-                    .body(Todo.class);
-            return todo;
-        } catch (HttpClientErrorException e) {
-            if(e.getStatusCode() == HttpStatus.NOT_FOUND) {
-                throw new TodoException.NotFound(id);
-            } else {
-                throw new TodoException("다른 에러 : " + e.getMessage());
-            }
-        }
+        Todo todo = restClient.get()
+                .uri("/todos/{id}", id)
+                .retrieve()
+                .onStatus(status -> status.value() == 404, (req, res) -> {
+                    throw new TodoException.NotFound(id);
+                })
+                .body(Todo.class);
+        return todo;
     }
 }
