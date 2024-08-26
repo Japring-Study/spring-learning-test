@@ -17,6 +17,8 @@ public class Book {
     public Book() {
 
     }
+    @OneToMany(mappedBy = "book")
+    Set<BookAuthor> authors;
 
     public Book(String name, Publisher publisher) {
         this.name = name;
@@ -35,7 +37,7 @@ public class Book {
         return publisher;
     }
 
-    public Set<Author> getAuthors() {
-        return null;
+    public Set<BookAuthor> getAuthors() {
+        return authors;
     }
 }
