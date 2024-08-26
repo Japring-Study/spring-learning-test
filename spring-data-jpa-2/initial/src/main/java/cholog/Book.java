@@ -12,7 +12,7 @@ public class Book {
     private String name;
 
     @ManyToOne
-    Publisher publisher;
+    public Publisher publisher;
 
     public Book() {
 
