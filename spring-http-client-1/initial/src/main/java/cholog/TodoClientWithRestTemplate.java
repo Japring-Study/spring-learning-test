@@ -22,7 +22,7 @@ public class TodoClientWithRestTemplate {
             if(e.getStatusCode() == HttpStatus.NOT_FOUND) {
                 throw new TodoException.NotFound(id);
             } else {
-                throw new TodoException("다른 에러: " + e.getMessage());
+                throw new TodoException("다른 에러 : " + e.getMessage());
             }
         }
     }
