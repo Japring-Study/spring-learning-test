@@ -2,6 +2,8 @@ package cholog;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Author {
     @Id
@@ -10,6 +12,12 @@ public class Author {
 
     @OneToOne
     private Person person;
+
+    @OneToMany(mappedBy = "author")
+    Set<BookAuthor> books;
+
+//    @ManyToMany(mappedBy = "authors")
+//    Set<Book> books;
 
     public Author(Person person) {
         this.person = person;

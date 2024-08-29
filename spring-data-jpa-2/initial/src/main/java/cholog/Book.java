@@ -14,6 +14,9 @@ public class Book {
     @ManyToOne
     private Publisher publisher;
 
+    @OneToMany(mappedBy="book")
+    Set<BookAuthor> authors;
+
     public Book() {
 
     }
