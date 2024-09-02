@@ -2,6 +2,7 @@ package cholog;
 
 import org.springframework.web.client.RestClient;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,8 +14,12 @@ public class TodoClientWithRestClient {
     }
 
     public List<Todo> getTodos() {
-        // TODO: restClient의 get 메서드를 사용하여 요청을 보내고 결과를 Todo 리스트로 변환하여 반환
-        return Collections.emptyList();
+        Todo[] result = restClient.get()
+                .uri("http://jsonplaceholder.typicode.com/todos")
+                .retrieve()
+                .body(Todo[].class);
+
+        return Arrays.asList(result);
     }
 
     public Todo getTodoById(Long id) {
