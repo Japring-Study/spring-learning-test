@@ -1,5 +1,6 @@
 package cholog;
 
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.client.RestClient;
 
 import java.util.Arrays;
@@ -27,6 +28,9 @@ public class TodoClientWithRestClient {
         Todo result = restClient.get()
                 .uri("http://jsonplaceholder.typicode.com/todos/{id}", id)
                 .retrieve()
+                .onStatus(status -> status.value() == 404, (req, res) -> {
+                    throw new TodoException.NotFound(id);
+                })
                 .body(Todo.class);
 
         return result;
